@@ -10,6 +10,7 @@ static void customBoardDefaultConfiguration() {
     setHellenCan();
     setDefaultHellenAtPullUps();
 
+
     // ------------------------------------------------------------
     // CAN1
     // ------------------------------------------------------------
@@ -35,7 +36,9 @@ static void customBoardDefaultConfiguration() {
     engineConfiguration->ignitionPins[0] = Gpio::A0;
     engineConfiguration->ignitionPins[1] = Gpio::A1;
     engineConfiguration->ignitionPins[2] = Gpio::A2;
-    engineConfiguration->ignitionPins[3] = Gpio::A3;
+
+    // PA3 reserved for software knock
+    // engineConfiguration->ignitionPins[3] = Gpio::A3;
 
 
     // ------------------------------------------------------------
@@ -58,6 +61,13 @@ static void customBoardDefaultConfiguration() {
 
     engineConfiguration->afr.hwChannel = EFI_ADC_10;
     engineConfiguration->vbattAdcChannel = EFI_ADC_11;
+
+
+    // ------------------------------------------------------------
+    // KNOCK
+    // ------------------------------------------------------------
+
+    engineConfiguration->enableSoftwareKnock = true;
 
 
     // ------------------------------------------------------------
@@ -89,7 +99,6 @@ static void customBoardDefaultConfiguration() {
 
     engineConfiguration->injectionMode = IM_SEQUENTIAL;
 }
-
 
 void setup_custom_board_overrides() {
     custom_board_DefaultConfiguration = customBoardDefaultConfiguration;
