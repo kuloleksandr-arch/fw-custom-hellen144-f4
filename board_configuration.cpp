@@ -4,7 +4,6 @@
 #include "board_overrides.h"
 
 static void customBoardDefaultConfiguration() {
-
     // Keep the existing Hellen F4 hardware defaults
     setHellenVbatt();
     setHellenCan();
@@ -36,9 +35,9 @@ static void customBoardDefaultConfiguration() {
     engineConfiguration->ignitionPins[0] = Gpio::A0;
     engineConfiguration->ignitionPins[1] = Gpio::A1;
     engineConfiguration->ignitionPins[2] = Gpio::A2;
+    engineConfiguration->ignitionPins[3] = Gpio::E14;
 
-    // PA3 reserved for software knock
-    // engineConfiguration->ignitionPins[3] = Gpio::A3;
+    // PA3 is reserved for software knock.
 
 
     // ------------------------------------------------------------
@@ -64,18 +63,29 @@ static void customBoardDefaultConfiguration() {
 
 
     // ------------------------------------------------------------
-    // KNOCK
+    // AUXILIARY ANALOG INPUTS
+    // ------------------------------------------------------------
+
+    engineConfiguration->auxLinear1.hwChannel = EFI_ADC_12;
+    engineConfiguration->auxLinear2.hwChannel = EFI_ADC_13;
+
+
+    // ------------------------------------------------------------
+    // SOFTWARE KNOCK
     // ------------------------------------------------------------
 
     engineConfiguration->enableSoftwareKnock = true;
 
 
     // ------------------------------------------------------------
-    // AUXILIARY ANALOG INPUTS
+    // BOOST / RELAYS / INDICATORS
     // ------------------------------------------------------------
 
-    engineConfiguration->auxLinear1.hwChannel = EFI_ADC_12;
-    engineConfiguration->auxLinear2.hwChannel = EFI_ADC_13;
+    engineConfiguration->boostControlPin = Gpio::B8;
+    engineConfiguration->fuelPumpPin = Gpio::B9;
+
+    engineConfiguration->o2heaterPin = Gpio::E12;
+    engineConfiguration->malfunctionIndicatorPin = Gpio::E13;
 
 
     // ------------------------------------------------------------
@@ -88,7 +98,7 @@ static void customBoardDefaultConfiguration() {
 
 
     // ------------------------------------------------------------
-    // Basic engine defaults
+    // BASIC ENGINE DEFAULTS
     // ------------------------------------------------------------
 
     engineConfiguration->cylindersCount = 4;
@@ -96,7 +106,6 @@ static void customBoardDefaultConfiguration() {
     engineConfiguration->ignitionMode = IM_INDIVIDUAL_COILS;
 
     engineConfiguration->crankingInjectionMode = IM_SIMULTANEOUS;
-
     engineConfiguration->injectionMode = IM_SEQUENTIAL;
 }
 
